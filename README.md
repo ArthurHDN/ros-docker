@@ -3,9 +3,9 @@ Repository to store custom ROS docker images and configurations
 
 1. Download Docker: https://docs.docker.com/get-docker/
 
-2. Pull ros image
+2. Pull custom ros image
 ```
-arthurhdn/ros:melodic-full-novnc
+docker pull arthurhdn/ros:melodic-full-novnc
 ```
 
 3. cd to the repo and run the compose
