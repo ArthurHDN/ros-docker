@@ -2,19 +2,22 @@
 The power of ROS with Docker encapsulation
 
 1. Download Docker: https://docs.docker.com/get-docker/
+You need to download Docker to manage the containerization.
 
-2. cd to the repo and run the compose
-```
+2. Run compose
+
+```bash
 docker compose up --build
 ```
 
 3. Enter the dev container
-```
+```bash
 docker exec -it ros-dev bash
 ```
 
-4. Open your web browser and access
-```
+4. Access dev GUI
+
+```bash
 http://localhost:6080
 ```
 
@@ -44,4 +47,3 @@ https://stackoverflow.com/questions/40465979/change-docker-native-images-locatio
 
 Windows enable docker WSL2
 https://docs.docker.com/desktop/windows/wsl/
-
