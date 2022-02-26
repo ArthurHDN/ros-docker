@@ -1,5 +1,0 @@
-FROM ros:melodic
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update 
-RUN apt-get install -y ros-melodic-desktop-full --fix-missing
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /root/.bashrc
