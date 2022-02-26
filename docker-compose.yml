@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+
+  master:
+    build: 
+      context: ./
+      target: ros_base
+    container_name: ros-master
+    ports:
+      - "11311:11311"
+    command: stdbuf -o L roscore
+    networks:
+      - ros
+    restart: always
+
+  talker:
+    build: 
+      context: ./
+      target: ros_base
+    container_name: ros-talker
+    depends_on:
+      - master
+    environment:
+      - "ROS_MASTER_URI=http://master:11311"
+      - "ROS_HOSTNAME=talker"
+    command: stdbuf -o L rostopic pub /chatter std_msgs/String "hello" -r 1
+    networks:
+      - ros
+    restart: always
+
+  listener:
+    build: 
+      context: ./
+      target: ros_base
+    container_name: ros-listener
+    depends_on:
+      - master
+    environment:
+      - "ROS_MASTER_URI=http://master:11311"
+      - "ROS_HOSTNAME=listener"
+    command: stdbuf -o L rostopic echo /chatter
+    networks:
+      - ros
+    restart: always
+
+  dev:
+    build: 
+      context: ./
+      target: ros_dev
+    container_name: ros-dev
+    depends_on:
+      - master
+    environment:
+      - "ROS_MASTER_URI=http://master:11311"
+      - "ROS_HOSTNAME=dev"
+    ports:
+      - "6080:6080"
+    # cap_add:
+    #   - "NET_ADMIN"
+    #   - "NET_BROADCAST"
+    volumes:
+      - ./workspaces/:/workspaces/
+    command: bash -c "/start_novnc.sh"
+    networks:
+      - ros
+    restart: always
+
+networks:
+  ros:
+    driver: bridge
