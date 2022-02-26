@@ -1,9 +1,0 @@
-int64[] x_j
-int64[] y_j
-int64[] theta_j
-int64[] in_a_circle_j
-int64[] s_j
-int64[] g_j
----
-int64 to
-int64 from
