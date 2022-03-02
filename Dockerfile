@@ -25,6 +25,7 @@ RUN apt-get install -y \
     iputils-ping \
     iproute2 \
     iptables \
+    python3-catkin-tools \
     tcpdump
 RUN cd /root && git clone https://github.com/kanaka/noVNC.git && \
     cd noVNC/utils && git clone https://github.com/kanaka/websockify websockify
@@ -34,6 +35,7 @@ ENV SCREEN_SIZE 1280x768x24
 COPY start_novnc.sh start_novnc.sh
 # RUN vim start_novnc.sh +"set ff=unix" +wq
 RUN dos2unix start_novnc.sh && chmod 0755 start_novnc.sh
+WORKDIR /workspaces
 
 
 ##########################
