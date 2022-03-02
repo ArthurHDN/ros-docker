@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+
+  master:
+    extra_hosts:
+      - "${MASTER_HOSTNAME:-master}:$MASTER_IP"
+
+  talker:
+    extra_hosts:
+      - "${MASTER_HOSTNAME:-master}:$MASTER_IP"
+
+  listener:
+    extra_hosts:
+      - "${MASTER_HOSTNAME:-master}:$MASTER_IP"
+
+  dev:
+    extra_hosts:
+      - "${MASTER_HOSTNAME:-master}:$MASTER_IP"

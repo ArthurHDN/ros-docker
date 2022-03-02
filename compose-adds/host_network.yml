@@ -1,0 +1,7 @@
+version: '3.9'
+
+networks:
+  ros:
+    name: host
+    driver: host
+    external: true

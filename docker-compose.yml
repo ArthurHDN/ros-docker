@@ -11,11 +11,10 @@ services:
       - "11311:11311"
       - "33690:33690"
     environment:
-      - "ROS_IP=172.19.0.2"
+      - "ROS_MASTER_URI=http://localhost:11311"
     command: stdbuf -o L roscore
     networks:
-      ros:
-        ipv4_address: 172.19.0.2
+      - ros
 
   talker:
     build: 
@@ -25,12 +24,11 @@ services:
     depends_on:
       - master
     environment:
-      - "ROS_MASTER_URI=http://172.19.0.2:11311"
-      - "ROS_IP=172.19.0.3"
+      - "ROS_MASTER_URI=http://${MASTER_HOSTNAME:-master}:11311"
+      - "ROS_HOSTNAME=talker"
     command: stdbuf -o L rostopic pub /chatter std_msgs/String "hello" -r 1
     networks:
-      ros:
-        ipv4_address: 172.19.0.3
+      - ros
 
   listener:
     build: 
@@ -40,12 +38,11 @@ services:
     depends_on:
       - master
     environment:
-      - "ROS_MASTER_URI=http://172.19.0.2:11311"
-      - "ROS_IP=172.19.0.4"
+      - "ROS_MASTER_URI=http://${MASTER_HOSTNAME:-master}:11311"
+      - "ROS_HOSTNAME=listener"
     command: stdbuf -o L rostopic echo /chatter
     networks:
-      ros:
-        ipv4_address: 172.19.0.4
+      - ros
 
   dev:
     build: 
@@ -55,12 +52,10 @@ services:
     depends_on:
       - master
     environment:
-      - "ROS_MASTER_URI=http://172.19.0.2:11311"
-      - "ROS_IP=172.19.0.5"
+      - "ROS_MASTER_URI=http://${MASTER_HOSTNAME:-master}:11311"
+      - "ROS_HOSTNAME=dev"
     ports:
       - "6080:6080"
-    # extra_hosts:
-    #   - "$MASTER_HOSTNAME:$MASTER_IP"
     # cap_add:
     #   - "NET_ADMIN"
     #   - "NET_BROADCAST"
@@ -68,14 +63,8 @@ services:
       - ./workspaces/:/workspaces/
     command: bash -c "/start_novnc.sh"
     networks:
-      ros:
-        ipv4_address: 172.19.0.5
+      - ros
 
 networks:
   ros:
     driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.19.0.0/24
-        gateway: 172.19.0.1
