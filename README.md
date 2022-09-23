@@ -12,7 +12,7 @@ docker compose up --build
 
 3. Enter the dev container
 ```bash
-docker exec -it ros-dev bash
+docker exec -it ros-dev tmux
 ```
 
 4. Access dev GUI
