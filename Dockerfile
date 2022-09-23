@@ -1,4 +1,4 @@
-FROM ros:melodic AS ros_base
+FROM ros:noetic AS ros_base
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /root/.bashrc
 
